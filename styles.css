@@ -135,27 +135,40 @@ a { color: inherit; }
 .bz-nav-dropdown {
   position: relative;
   display: inline-flex;
+  align-items: stretch;
+}
+.bz-nav-dropdown__trigger {
+  display: flex;
   align-items: center;
 }
 .bz-nav-dropdown__trigger::after {
   content: ' ▾';
   font-size: 10px;
-  opacity: 0.6;
+  opacity: 0.55;
+  margin-left: 1px;
 }
 .bz-nav-dropdown__panel {
   display: none;
   position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
+  top: 100%;
+  left: 0;
   background: var(--background-color-primary);
   border: 1px solid var(--border-color-tertiary);
   border-radius: var(--radius-size-md);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
-  padding: 8px 4px;
-  min-width: 220px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+  padding: 6px 4px 8px;
+  min-width: 230px;
   z-index: 200;
   white-space: nowrap;
+}
+/* Invisible bridge fills the 0px seam so hover stays alive when moving mouse down */
+.bz-nav-dropdown__panel::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
 }
 .bz-nav-dropdown:hover .bz-nav-dropdown__panel,
 .bz-nav-dropdown:focus-within .bz-nav-dropdown__panel {
@@ -170,9 +183,7 @@ a { color: inherit; }
   padding: 10px 12px 4px;
   margin: 0;
 }
-.bz-nav-dropdown__group-title:first-child {
-  padding-top: 4px;
-}
+.bz-nav-dropdown__group-title:first-child { padding-top: 6px; }
 .bz-nav-dropdown__link {
   display: block;
   padding: 6px 12px;
@@ -181,6 +192,7 @@ a { color: inherit; }
   text-decoration: none;
   border-radius: 6px;
   margin: 0 4px;
+  transition: background 0.1s, color 0.1s;
 }
 .bz-nav-dropdown__link:hover {
   background: var(--background-color-secondary);
@@ -191,9 +203,10 @@ a { color: inherit; }
 }
 .bz-nav-dropdown__link--editor::after {
   content: ' →';
-  opacity: 0.5;
+  opacity: 0.45;
 }
 .bz-nav-dropdown__link--editor:hover {
+  background: var(--background-color-secondary);
   color: var(--text-color-secondary);
 }
 .bz-nav-dropdown__separator {
@@ -210,23 +223,22 @@ a { color: inherit; }
   color: var(--color-brand-primary-dark);
   text-decoration: none;
   border-top: 1px solid var(--border-color-tertiary);
+  transition: color 0.1s;
 }
-.bz-nav-dropdown__footer:hover {
-  color: var(--color-brand-primary-darkest);
-}
+.bz-nav-dropdown__footer:hover { color: var(--color-brand-primary-darkest); }
 @media (max-width: 900px) {
   .bz-nav-dropdown { display: block; width: 100%; }
   .bz-nav-dropdown__panel {
     display: block;
     position: static;
-    transform: none;
     box-shadow: none;
     border: none;
     border-radius: 0;
-    padding: 0 0 0 12px;
+    padding: 0 0 4px 12px;
     background: transparent;
     min-width: unset;
   }
+  .bz-nav-dropdown__panel::before { display: none; }
   .bz-nav-dropdown__trigger::after { display: none; }
   .bz-nav-dropdown__footer { border-top: none; padding: 4px 12px; margin: 0; }
 }
